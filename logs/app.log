@@ -1,0 +1,110 @@
+INFO:org.nmochizuki.Controller:Controller started.
+ERROR:org.nmochizuki.module.Benchmark:<urlopen error timed out>
+INFO:org.nmochizuki.module.Benchmark:{'exec_time': 4.438755989074707, 'message': URLError(timeout('timed out',),), 'total': 3200, 'start': 1369647870.023267, 'end': 1369647874.462023, 'avg_time': 0.04359210133855263, 'result_time': 0.032640933990478516, 'success': 3199, 'error': 1}
+INFO:org.nmochizuki.Controller:Controller finished.
+INFO:org.nmochizuki.Controller:Controller started.
+ERROR:org.nmochizuki.module.Benchmark:<urlopen error timed out>
+INFO:org.nmochizuki.module.Benchmark:{'end': 1369648098.236702, 'total': 3200, 'message': URLError(timeout('timed out',),), 'exec_time': 4.324887037277222, 'error': 1, 'success': 3199, 'avg_time': 0.04248674450219967, 'start': 1369648093.911815, 'result_time': 0.041526079177856445}
+INFO:org.nmochizuki.module.Benchmark:{'end': 1369648098.236702, 'total': 3200, 'message': URLError(timeout('timed out',),), 'exec_time': 4.324887037277222, 'error': 1, 'success': 3199, 'avg_time': 0.04248674450219967, 'start': 1369648093.911815, 'result_time': 0.041526079177856445}
+INFO:org.nmochizuki.Controller:Controller finished.
+INFO:org.nmochizuki.Controller:Controller started.
+INFO:org.nmochizuki.module.Benchmark:{'avg_time': 0.042940862325533145, 'error': 0, 'success': 3200, 'start': 1369648209.455848, 'end': 1369648213.8063, 'message': '', 'exec_time': 4.350451946258545, 'total': 3200, 'result_time': 0.03637409210205078}
+INFO:org.nmochizuki.Controller:Controller finished.
+INFO:org.nmochizuki.Controller:Controller started.
+ERROR:org.nmochizuki.module.Benchmark:<urlopen error timed out>
+INFO:org.nmochizuki.module.Benchmark:{'max_time': 0.054960012435913086, 'start': 1369702495.618168, 'success': 31, 'error': 1, 'end': 1369702496.637585, 'result_time': 0.04563593864440918, 'exec_time': 1.0194168090820312, 'avg_time': 0.036615200340747826, 'total': 32, 'min_time': 0.0, 'message': URLError(timeout('timed out',),)}
+INFO:org.nmochizuki.Controller:Controller finished.
+INFO:org.nmochizuki.Controller:Controller started.
+INFO:org.nmochizuki.module.Benchmark:{'exec_time': 0.07061505317687988, 'min_time': 0.007683992385864258, 'total': 32, 'message': '', 'end': 1369702634.260636, 'start': 1369702634.190021, 'result_time': 0.031009912490844727, 'success': 32, 'avg_time': 0.021117282636237866, 'error': 0, 'max_time': 0.031009912490844727}
+INFO:org.nmochizuki.Controller:Controller finished.
+2013-05-28 10:13:32,356 INFO __init__ 27 Controller started.
+2013-05-28 10:13:33,382 ERROR urlRequest 73 <urlopen error timed out>
+2013-05-28 10:13:33,382 INFO __del__ 110 {'error': 1, 'success': 31, 'end': 1369703613.382732, 'avg_time': 0.02332838624715805, 'total': 32, 'message': URLError(timeout('timed out',),), 'min_time': 0.010603904724121094, 'max_time': 0.03300309181213379, 'result_time': 0.028338909149169922, 'start': 1369703612.360189, 'exec_time': 1.022542953491211}
+2013-05-28 10:13:33,383 INFO __del__ 73 Controller finished.
+2013-05-28 10:16:11,922 INFO __init__ 27 Controller started.
+2013-05-28 10:16:11,987 INFO __del__ 110 {'message': '', 'avg_time': 0.022168188384084988, 'total': 32, 'success': 32, 'result_time': 0.02644515037536621, 'end': 1369703771.987257, 'min_time': 0.01412510871887207, 'error': 0, 'exec_time': 0.06221890449523926, 'start': 1369703771.925038, 'max_time': 0.0317840576171875}
+2013-05-28 10:16:11,987 INFO __del__ 73 Controller finished.
+2013-05-28 10:33:14,560 INFO __init__ 28 Controller started.
+2013-05-28 10:33:14,600 INFO __del__ 110 {'error': 0, 'success': 1, 'start': 1369704794.563966, 'exec_time': 0.03634285926818848, 'message': '', 'min_time': 0.03559708595275879, 'total': 1, 'avg_time': 0.017798542976379395, 'max_time': 0.03559708595275879, 'result_time': 0.03559708595275879, 'end': 1369704794.600309}
+2013-05-28 10:33:14,600 INFO __del__ 74 Controller finished.
+2013-05-28 10:33:31,654 INFO __init__ 28 Controller started.
+2013-05-28 10:33:31,674 INFO __del__ 110 {'avg_time': 0.008142471313476562, 'error': 0, 'success': 1, 'max_time': 0.016284942626953125, 'exec_time': 0.01694321632385254, 'end': 1369704811.674343, 'start': 1369704811.6574, 'result_time': 0.016284942626953125, 'min_time': 0.016284942626953125, 'total': 1, 'message': ''}
+2013-05-28 10:33:31,674 INFO __del__ 74 Controller finished.
+2013-05-28 10:34:10,786 INFO __init__ 28 Controller started.
+2013-05-28 10:34:10,807 INFO __del__ 110 {'result_time': 0.01674818992614746, 'exec_time': 0.01737499237060547, 'total': 1, 'avg_time': 0.00837409496307373, 'message': '', 'start': 1369704850.789946, 'max_time': 0.01674818992614746, 'error': 0, 'success': 1, 'min_time': 0.01674818992614746, 'end': 1369704850.807321}
+2013-05-28 10:34:10,807 INFO __del__ 74 Controller finished.
+2013-05-28 10:34:21,136 INFO __init__ 28 Controller started.
+2013-05-28 10:34:21,157 INFO __del__ 110 {'end': 1369704861.157339, 'min_time': 0.016916990280151367, 'result_time': 0.016916990280151367, 'max_time': 0.016916990280151367, 'total': 1, 'avg_time': 0.008458495140075684, 'message': '', 'start': 1369704861.139723, 'exec_time': 0.01761603355407715, 'error': 0, 'success': 1}
+2013-05-28 10:34:21,157 INFO __del__ 74 Controller finished.
+2013-05-28 11:29:20,325 INFO __init__ 28 Controller started.
+2013-05-28 11:29:20,346 INFO __del__ 110 {'avg_time': 0.008605480194091797, 'start': 1369708160.328867, 'message': '', 'total': 1, 'max_time': 0.017210960388183594, 'min_time': 0.017210960388183594, 'success': 1, 'result_time': 0.017210960388183594, 'end': 1369708160.346748, 'error': 0, 'exec_time': 0.017881155014038086}
+2013-05-28 11:29:20,347 INFO __del__ 74 Controller finished.
+2013-05-28 11:29:53,868 INFO __init__ 26 Controller started.
+2013-05-28 11:29:53,889 INFO __del__ 110 {'start': 1369708193.872066, 'max_time': 0.01697707176208496, 'error': 0, 'avg_time': 0.00848853588104248, 'message': '', 'exec_time': 0.01765608787536621, 'end': 1369708193.889722, 'success': 1, 'total': 1, 'min_time': 0.01697707176208496, 'result_time': 0.01697707176208496}
+2013-05-28 11:29:53,890 INFO __del__ 72 Controller finished.
+2013-05-28 11:56:19,861 [INFO    ] [org.nmochizuki.Controller] __init__:26 Controller started.
+2013-05-28 11:56:19,883 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:110 {'result_time': 0.017625808715820312, 'end': 1369709779.88379, 'avg_time': 0.008812904357910156, 'total': 1, 'max_time': 0.017625808715820312, 'message': '', 'min_time': 0.017625808715820312, 'success': 1, 'error': 0, 'exec_time': 0.01826310157775879, 'start': 1369709779.865527}
+2013-05-28 11:56:19,884 [INFO    ] [org.nmochizuki.Controller] __del__:72 Controller finished.
+2013-05-28 12:08:57,547 [INFO    ] [org.nmochizuki.Controller] __init__:27 Controller started.
+2013-05-28 12:08:57,571 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:110 {'total': 1, 'message': '', 'exec_time': 0.021120071411132812, 'result_time': 0.02042388916015625, 'avg_time': 0.010211944580078125, 'start': 1369710537.550431, 'max_time': 0.02042388916015625, 'success': 1, 'min_time': 0.02042388916015625, 'error': 0, 'end': 1369710537.571551}
+2013-05-28 12:08:57,571 [INFO    ] [org.nmochizuki.Controller] __del__:73 Controller finished.
+2013-05-28 14:11:13,968 [INFO    ] [__main__] main:45 pid : 62835
+2013-05-28 14:11:13,969 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 14:11:13,970 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 14:11:14,021 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:110 {'error': 0, 'success': 10, 'start': 1369717873.973612, 'max_time': 0.02110004425048828, 'exec_time': 0.047796010971069336, 'min_time': 0.0025479793548583984, 'total': 10, 'avg_time': 0.004249919544566761, 'end': 1369717874.021408, 'message': '', 'result_time': 0.0028219223022460938}
+2013-05-28 14:11:14,021 [INFO    ] [org.nmochizuki.Controller] __del__:65 Controller finished.
+2013-05-28 15:18:30,863 [INFO    ] [__main__] main:45 pid : 69266
+2013-05-28 15:18:30,864 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 15:18:30,865 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 15:18:30,914 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:114 {'exec_time': 0.04606294631958008, 'start': 1369721910.868851, 'result_time': 0.0026700496673583984, 'max_time': 0.020249128341674805, 'min_time': 0.002569913864135742, 'end': 1369721910.914914, 'message': '', 'total': 10, 'avg_time': 0.004086732864379883, 'success': 10, 'error': 0}
+2013-05-28 15:18:30,915 [INFO    ] [org.nmochizuki.Controller] __del__:70 Controller finished.
+2013-05-28 15:38:20,302 [INFO    ] [__main__] main:45 pid : 71296
+2013-05-28 15:38:20,303 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 15:38:20,304 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 15:38:20,307 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 15:38:20,307 [INFO    ] [org.nmochizuki.Controller] __del__:70 Controller finished.
+2013-05-28 16:27:35,195 [INFO    ] [__main__] main:45 pid : 76503
+2013-05-28 16:27:35,195 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:27:35,196 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:27:35,200 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 16:27:35,200 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:41:01,336 [INFO    ] [__main__] main:45 pid : 78039
+2013-05-28 16:41:01,337 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:41:01,338 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:41:01,341 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 16:41:01,341 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:43:56,641 [INFO    ] [__main__] main:45 pid : 78500
+2013-05-28 16:43:56,641 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:43:56,642 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:43:56,645 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 16:43:56,645 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:52:34,517 [INFO    ] [__main__] main:45 pid : 79517
+2013-05-28 16:52:34,517 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:52:34,518 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:52:34,521 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 16:52:34,522 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:52:43,681 [INFO    ] [__main__] main:45 pid : 79538
+2013-05-28 16:52:43,682 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:52:43,682 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:52:43,685 [ERROR   ] [__main__] main:65 'Injector' object has no attribute 'register'
+2013-05-28 16:52:43,685 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:54:47,479 [INFO    ] [__main__] main:45 pid : 79778
+2013-05-28 16:54:47,479 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:54:47,480 [INFO    ] [org.nmochizuki.Controller] __init__:19 Controller started.
+2013-05-28 16:54:47,483 [ERROR   ] [__main__] main:65 global name 'Module' is not defined
+2013-05-28 16:54:47,484 [INFO    ] [org.nmochizuki.Controller] __del__:68 Controller finished.
+2013-05-28 16:55:55,532 [INFO    ] [__main__] main:45 pid : 79929
+2013-05-28 16:55:55,532 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:55:55,533 [INFO    ] [org.nmochizuki.Controller] __init__:20 Controller started.
+2013-05-28 16:55:56,254 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:112 {'exec_time': 0.7171339988708496, 'total': 100, 'success': 100, 'min_time': 0.002540111541748047, 'result_time': 0.002724170684814453, 'start': 1369727755.537375, 'end': 1369727756.254509, 'error': 0, 'max_time': 0.356158971786499, 'avg_time': 0.007043649654577274, 'message': ''}
+2013-05-28 16:55:56,254 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 16:58:54,779 [INFO    ] [__main__] main:45 pid : 80276
+2013-05-28 16:58:54,779 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 16:58:54,780 [INFO    ] [org.nmochizuki.Controller] __init__:20 Controller started.
+2013-05-28 16:58:54,784 [ERROR   ] [__main__] main:65 attribute name must be string, not 'type'
+2013-05-28 16:58:54,784 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
+2013-05-28 17:03:51,928 [INFO    ] [__main__] main:45 pid : 80825
+2013-05-28 17:03:51,928 [INFO    ] [__main__] main:45 pid : 0
+2013-05-28 17:03:51,929 [INFO    ] [org.nmochizuki.Controller] __init__:20 Controller started.
+2013-05-28 17:03:52,357 [INFO    ] [org.nmochizuki.module.Benchmark] __del__:112 {'end': 1369728232.357867, 'message': '', 'exec_time': 0.4245610237121582, 'total': 100, 'avg_time': 0.004154495673604533, 'start': 1369728231.933306, 'min_time': 0.002505064010620117, 'result_time': 0.0027861595153808594, 'max_time': 0.11803984642028809, 'error': 0, 'success': 100}
+2013-05-28 17:03:52,358 [INFO    ] [org.nmochizuki.Controller] __del__:69 Controller finished.
