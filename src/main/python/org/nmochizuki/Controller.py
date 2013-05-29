@@ -12,7 +12,6 @@ class Controller(object):
     """ """
     module = None
     params = dict()
-    config = None
     logger = logging.getLogger(__name__)
 
     def __init__(self):
@@ -26,10 +25,6 @@ class Controller(object):
             self.logger.error(e)
             sys.exit(-1)
 
-        #injector = inject.Injector()
-        #module = AppModule('benchmark', self.getParams())
-        #injector.bind(Module, module)
-        
         self.setModule(AppModule('benchmark', self.getParams()))
 
     def parseArguments(self):

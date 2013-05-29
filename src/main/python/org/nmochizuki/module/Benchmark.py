@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
-import logging
 import time
+import threading
 from time import sleep
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
+from urllib.request import Request
 from urllib.error import URLError
 from org.nmochizuki.AppContext import AppContext
+#from org.nmochizuki.decorators import synchronized
 
 class Benchmark(AppContext):
 
@@ -15,11 +17,12 @@ class Benchmark(AppContext):
     result      = dict()
     timeout     = 1.0
     qps         = 10
-
-    logger = logging.getLogger(__name__)
+    request     = None
 
     def __init__(self, module, params):
         """ """
+        AppContext.__init__(self)
+
         module = module()\
             .setUrl(params['url'])\
             .setCount(params['count'])\
@@ -34,6 +37,7 @@ class Benchmark(AppContext):
         self.timeout     = 1.0
 
         self.initResult()
+        self.initRequest()
 
     def initResult(self):
         """ """ 
@@ -48,12 +52,21 @@ class Benchmark(AppContext):
         self.result['start']       = time.time()
         self.result['end']         = 0.0
 
+    def initRequest(self):
+        self.request = Request(self.url)
+        self.request.method = self.method
+        self.request.add_header('Accept-Encoding', 'gzip, deflate')
+        self.request.add_header('Connection', 'keep-alive')
+        self.request.add_header('Cookie', 'TR=1;')
+        self.request.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:20.0) Gecko/20100101 Firefox/20.0')
+
     def execute(self):
         """ """
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             try:
                 for i in range(self.count):
-                    future = executor.submit(self.urlRequest, self.url, self.timeout)
+                    future = executor.submit(self.urlRequest, self.request, self.timeout)
+                    #print(future)
 
             except RuntimeError as e:
                 self.logger.error(e)
@@ -62,12 +75,14 @@ class Benchmark(AppContext):
                 self.result['total'] += 1
 
     @classmethod
-    def urlRequest(cls, url, timeout):
+    def urlRequest(cls, request, timeout):
         """ return None """
         start = time.time()
 
+        cls.logger.debug("thread:%s started." % (threading.current_thread(),))
+
         try:
-            rs = urlopen(url, timeout=timeout)
+            rs = urlopen(request, timeout=timeout)
             if rs.status != 200:
                 raise URLError("status:%d" % (rs.status,))
 
@@ -86,7 +101,8 @@ class Benchmark(AppContext):
             raise RuntimeError(e)
 
         finally:
-            rs.close()
+            if rs:
+                rs.close()
 
         cls.result['result_time'] = time.time() - start
         if cls.result['max_time'] <= cls.result['result_time']:
@@ -99,12 +115,12 @@ class Benchmark(AppContext):
                                     + cls.result['result_time']) / (cls.result['total']+1)
  
         if cls.result['total'] > 0 and cls.result['total'] % 100 == 0:
-            self.logger.info(cls.result)
+            cls.logger.info("request passed %d." % (cls.result['total'],))
 
         if cls.result['avg_time'] == 0.0:
             cls.result['avg_time'] = cls.result['result_time']
 
-        cls.logger.debug("time:\t%s" % cls.request['result_time'])
+        cls.logger.debug("thread:%s finished." % (threading.current_thread(),))
 
     def __del__(self):
         self.result['end'] = time.time()
@@ -161,4 +177,5 @@ class BenchmarkModule(object):
 
     def getMethod(self):
         return self.method
+
 

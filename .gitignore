@@ -1,6 +1,8 @@
 .*
 *.pyc
 *.swp
+src/main/resources/*.txt
+logs/*.log
 *.egg-info
 __pychache__
 !.gitignore

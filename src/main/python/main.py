@@ -4,27 +4,20 @@ import sys
 import os
 import signal
 import logging
+import inject
 from org.nmochizuki.Controller import Controller
 from configparser import ConfigParser
 
 Pid = -1
-
-def ttfb(func):
-    import time
-    def _ttfb(*args, **kw):
-        start = time.time()
-        res = func(*args, **kw)
-        ttfb = time.time() - start
-        print(ttfb)
-        return res
-    return _ttfb
+logger = logging.getLogger(__name__)
 
 def handler(signum, frame):
     """ """
     assert Pid > 0 
-    print >> sys.stderr, "Interrupted by the signal (mom)"
-    print >> sys.stderr, "Killing pid %d" % pid 
-    os.kill(pid, signal.SIGKILL) #
+    sys.stderr.write("Interrupted by the signal (mom)\n")
+    sys.stderr.write("Killing pid %d\n" % (Pid,))
+    os.kill(Pid, signal.SIGKILL)
+    logger.info('killed pid: %d' % (Pid,))
     sys.exit(1)
 
 def main(*args, **kw):
@@ -38,11 +31,10 @@ def main(*args, **kw):
         format=config['logging']['format'],
         filename=config['logging']['path'])
 
-    logger = logging.getLogger(__name__)
-
     try:
         Pid = os.fork()
-        logger.info("pid : %d" % Pid)
+        if Pid > 0:
+            logger.info("pid : %d" % Pid)
 
         if Pid == -1:
             raise "Failed to fork."
@@ -58,9 +50,6 @@ def main(*args, **kw):
             signal.signal(signal.SIGQUIT, handler)  # Ctrl-
             os.wait()
 
-        #while True:
-        #    pass
-            
     except Exception as e:
         logger.error(e)
         return -1

@@ -13,8 +13,6 @@ class AppModule(Module):
     params = dict()
     app    = None
     module = None
-    #app    = inject.attr(AppContext)
-    #module = inject.attr(Module)
     logger = logging.getLogger(__name__)
 
     def __init__(self, name, params):
