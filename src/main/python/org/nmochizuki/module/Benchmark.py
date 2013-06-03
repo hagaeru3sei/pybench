@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import time
+import random
 import threading
 from time import sleep
 from concurrent.futures import ThreadPoolExecutor
@@ -18,6 +19,8 @@ class Benchmark(AppContext):
     timeout     = 1.0
     qps         = 10
     request     = None
+    urls        = []
+    useragents  = []
 
     def __init__(self, module, params):
         """ """
@@ -36,6 +39,9 @@ class Benchmark(AppContext):
         self.method      = module.getMethod()
         self.timeout     = 1.0
 
+        self.loadUserAgents()
+        self.loadURLs()
+
         self.initResult()
         self.initRequest()
 
@@ -53,20 +59,37 @@ class Benchmark(AppContext):
         self.result['end']         = 0.0
 
     def initRequest(self):
+        """ """
         self.request = Request(self.url)
         self.request.method = self.method
         self.request.add_header('Accept-Encoding', 'gzip, deflate')
         self.request.add_header('Connection', 'keep-alive')
         self.request.add_header('Cookie', 'TR=1;')
-        self.request.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:20.0) Gecko/20100101 Firefox/20.0')
+        self.request.add_header('User-Agent', 'Mozilla/5.0')
+
+    def rebindRequest(self, useragent):
+        """ return Request request """
+        #request.full_url = random.sample(urls, 1)
+        self.request.add_header('User-Agent', useragent)
+        return self.request
+
+    def loadUserAgents(self):
+        """ """
+        with open('src/main/resources/useragent.txt') as fh:
+            self.useragents = [ua.rstrip() for ua in fh]
+
+    def loadURLs(self):
+        """ """
+        with open('src/main/resources/request.txt') as fh:
+            self.urls = [url.rstrip() for url in fh]
 
     def execute(self):
         """ """
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             try:
                 for i in range(self.count):
-                    future = executor.submit(self.urlRequest, self.request, self.timeout)
-                    #print(future)
+                    #self.rebindRequest(random.sample(self.useragents, 1))
+                    executor.submit(self.urlRequest, self.request, self.timeout)
 
             except RuntimeError as e:
                 self.logger.error(e)
@@ -75,7 +98,7 @@ class Benchmark(AppContext):
                 self.result['total'] += 1
 
     @classmethod
-    def urlRequest(cls, request, timeout):
+    def urlRequest(cls, request, timeout, useragent="", url=""):
         """ return None """
         start = time.time()
 
