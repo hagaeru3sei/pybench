@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import sys
 import logging
-import inject
+from injector import Key
+from injector import Injector
 from argparse import ArgumentParser
 from org.nmochizuki.validator import Validator
 from org.nmochizuki.ExtExceptions import ValidatorError
@@ -29,19 +30,28 @@ class Controller(object):
 
     def parseArguments(self):
         """ """
-        parser = ArgumentParser()
-        parser.add_argument('-u', '--url', required=True, type=str)
-        parser.add_argument('-n', '--count', required=True, type=int)
-        parser.add_argument('-c', '--worker', required=True, type=int)
-        parser.add_argument('-q', '--qps', type=int)
-        parser.add_argument('-m', '--method', type=int)
-        args = parser.parse_args()
+        try:
+            injector = Injector()
+            IArgumentParser = Key('IArgumentParser')
+            injector.binder.bind(IArgumentParser, ArgumentParser)
+            parser   = injector.get(IArgumentParser)
 
-        self.params['url']    = args.url
-        self.params['count']  = args.count
-        self.params['worker'] = args.worker
-        self.params['qps']    = args.qps
-        self.params['method'] = args.method
+            parser.add_argument('-u', '--url', required=True, type=str)
+            parser.add_argument('-n', '--count', required=True, type=int)
+            parser.add_argument('-c', '--worker', required=True, type=int)
+            parser.add_argument('-q', '--qps', type=int)
+            parser.add_argument('-m', '--method', type=int)
+            args = parser.parse_args()
+
+            self.params['url']    = args.url
+            self.params['count']  = args.count
+            self.params['worker'] = args.worker
+            self.params['qps']    = args.qps
+            self.params['method'] = args.method
+
+        except Exception as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
     def setParams(self, params):
         self.params = params

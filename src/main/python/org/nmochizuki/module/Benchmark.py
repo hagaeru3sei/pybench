@@ -105,9 +105,9 @@ class Benchmark(AppContext):
         cls.logger.debug("thread:%s started." % (threading.current_thread(),))
 
         try:
-            rs = urlopen(request, timeout=timeout)
-            if rs.status != 200:
-                raise URLError("status:%d" % (rs.status,))
+            with urlopen(request, timeout=timeout) as rs:
+                if rs.status != 200:
+                    raise URLError("status:%d" % (rs.status,))
 
         except URLError as e:
             cls.logger.error(e)
@@ -122,10 +122,6 @@ class Benchmark(AppContext):
             cls.result['error'] += 1
             cls.result['total'] += 1
             raise RuntimeError(e)
-
-        finally:
-            if rs:
-                rs.close()
 
         cls.result['result_time'] = time.time() - start
         if cls.result['max_time'] <= cls.result['result_time']:

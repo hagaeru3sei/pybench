@@ -4,7 +4,6 @@ import sys
 import os
 import signal
 import logging
-import inject
 from org.nmochizuki.Controller import Controller
 from configparser import ConfigParser
 

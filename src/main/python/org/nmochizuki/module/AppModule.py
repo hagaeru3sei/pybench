@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import logging
 import sys
-import inject
 from org.nmochizuki.module.Benchmark import Benchmark
 from org.nmochizuki.module.Benchmark import BenchmarkModule
 from org.nmochizuki.module.Module import Module
