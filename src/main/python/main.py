@@ -5,6 +5,7 @@ import os
 import signal
 import logging
 from org.nmochizuki.Controller import Controller
+from org.nmochizuki.module.AppModule import AppModule
 from configparser import ConfigParser
 
 Pid = -1
@@ -12,7 +13,6 @@ logger = logging.getLogger(__name__)
 
 def handler(signum, frame):
     """ """
-    assert Pid > 0 
     sys.stderr.write("Interrupted by the signal (mom)\n")
     sys.stderr.write("Killing pid %d\n" % (Pid,))
     os.kill(Pid, signal.SIGKILL)

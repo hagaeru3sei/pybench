@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
 import sys
+from org.nmochizuki.variables import *
+from injector import inject
 from org.nmochizuki.module.Benchmark import Benchmark
 from org.nmochizuki.module.Benchmark import BenchmarkModule
 from org.nmochizuki.module.Module import Module
@@ -14,6 +16,7 @@ class AppModule(Module):
     module = None
     logger = logging.getLogger(__name__)
 
+    @inject(name=AppName, params=AppParams)
     def __init__(self, name, params):
         """ Override Module.__init__ """
         self.setName(name).setParams(params)

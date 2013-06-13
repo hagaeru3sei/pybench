@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 import sys
 import logging
-from injector import Key
-from injector import Injector
-from argparse import ArgumentParser
+from org.nmochizuki.variables import *
 from org.nmochizuki.validator import Validator
 from org.nmochizuki.ExtExceptions import ValidatorError
 from org.nmochizuki.module.Module import Module
 from org.nmochizuki.module.AppModule import AppModule
+from argparse import ArgumentParser
 
 class Controller(object):
     """ """
@@ -22,19 +21,28 @@ class Controller(object):
 
         try:
             Validator.valid(self.getParams())
+
+            injector.binder.bind(AppName, "benchmark")
+            injector.binder.bind(AppParams, self.getParams())
+
+            self.setModule(injector.get(AppModule))
+
         except ValidatorError as e:
             self.logger.error(e)
             sys.exit(-1)
 
-        self.setModule(AppModule('benchmark', self.getParams()))
+        except ImportError as e:
+            self.logger.error(e)
+            sys.exit(-1)
+
+        except NameError as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
     def parseArguments(self):
         """ """
         try:
-            injector = Injector()
-            IArgumentParser = Key('IArgumentParser')
-            injector.binder.bind(IArgumentParser, ArgumentParser)
-            parser   = injector.get(IArgumentParser)
+            parser = injector.get(IArgumentParser)
 
             parser.add_argument('-u', '--url', required=True, type=str)
             parser.add_argument('-n', '--count', required=True, type=int)
