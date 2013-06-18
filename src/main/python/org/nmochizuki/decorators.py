@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 from threading import RLock
 lock = RLock()
 def synchronized(function):
@@ -9,7 +10,6 @@ def synchronized(function):
     return _synchronized
 
 def ttfb(func):
-    import time
     def _ttfb(*args, **kw):
         start = time.time()
         res = func(*args, **kw)

@@ -3,7 +3,6 @@ from setuptools import setup, find_packages
 import sys
 sys.path.append('./src/main/python')
 sys.path.append('./src/test/python')
-print(sys.path)
 
 def benchmark_setup(*args, **kw):
     setup(

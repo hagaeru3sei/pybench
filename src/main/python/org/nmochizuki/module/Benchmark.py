@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import time
-import random
 import threading
-from time import sleep
+import logging
+from urllib.error import HTTPError
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
 from urllib.request import Request
@@ -21,6 +21,7 @@ class Benchmark(AppContext):
     request     = None
     urls        = []
     useragents  = []
+    logger      = logging.getLogger(__name__)
 
     def __init__(self, module, params):
         """ """

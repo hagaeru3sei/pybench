@@ -12,14 +12,16 @@ Pid = -1
 logger = logging.getLogger(__name__)
 
 def handler(signum, frame):
-    """ """
+    """ signal handler """
     sys.stderr.write("Interrupted by the signal (mom)\n")
     sys.stderr.write("Killing pid %d\n" % (Pid,))
+    sys.stderr.write("%s : %s\n" % (signum, frame,))
+
     os.kill(Pid, signal.SIGKILL)
     logger.info('killed pid: %d' % (Pid,))
     sys.exit(1)
 
-def main(*args, **kw):
+def main():
 
     global Pid
 
@@ -36,7 +38,7 @@ def main(*args, **kw):
             logger.info("pid : %d" % Pid)
 
         if Pid == -1:
-            raise "Failed to fork."
+            raise Exception("Failed to fork.")
 
         elif Pid == 0:
             controller = Controller()
