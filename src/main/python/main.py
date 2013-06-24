@@ -45,10 +45,10 @@ def main():
             controller.execute()
         else:
             assert Pid > 0
-            signal.signal(signal.SIGINT,  handler)  # Ctrl-c
-            signal.signal(signal.SIGTERM, handler)  # Ctrl-
-            signal.signal(signal.SIGHUP,  handler)  # Ctrl-
-            signal.signal(signal.SIGQUIT, handler)  # Ctrl-
+            signal.signal(signal.SIGINT,  handler)  # Ctrl-C
+            signal.signal(signal.SIGTERM, handler)  # kill -term [PID]
+            signal.signal(signal.SIGHUP,  handler)  # kill -HUP [PID]
+            signal.signal(signal.SIGQUIT, handler)  # Quit
             os.wait()
 
     except Exception as e:
