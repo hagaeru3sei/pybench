@@ -6,3 +6,6 @@ logs/*.log
 *.egg-info
 __pychache__
 !.gitignore
+GTAGS
+GPATH
+GRTAGS

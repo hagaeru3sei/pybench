@@ -105,18 +105,15 @@ class ControllerTest(TestCase):
         except Exception as e:
             self.assertFalse(e)
 
-    @fudge.test
     @skip('skip')
     def test_isAppModule(self):
         self.assertIs(type(self.module), AppModule)
 
-    @fudge.test
     @skip('skip')
     def test_isBenchMarkApp(self):
         benchmark = (fudge.Fake('Benchmark').is_callable().expects('__init__'))
         self.assertIsInstance(benchmark, self.module.get())
 
-    @fudge.test
     @skip('skip')
     def test_urlRequest(self):
         self.module.get().urlRequest()

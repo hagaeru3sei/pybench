@@ -11,7 +11,7 @@ AppParams       = Key('AppParams')
 injector.binder.bind(IArgumentParser, ArgumentParser)
 
 if AppName and AppParams:
-	from org.nmochizuki.module.AppModule import AppModule
+  from org.nmochizuki.module.AppModule import AppModule
 
 injector.binder.bind(AppModule)
 
