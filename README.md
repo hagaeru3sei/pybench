@@ -4,8 +4,13 @@ python3
 
 benchmark tool
 
+```
 pip3 install injector
 pip3 install fudge
+```
 
-Usage: 
-  ./src/main/python/main.py --help/-h
+### Usage: 
+
+```
+$PROJECT_ROOT/src/main/python/main.py --help/-h
+```
