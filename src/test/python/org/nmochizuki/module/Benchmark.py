@@ -19,7 +19,6 @@ class BenchmarkModuleTest(TestCase):
     module = None
 
     def setUp(self):
-        # self.module = fudge.Fake('BenchmarkModule').is_a_stub()
         self.module = BenchmarkModule()
 
     def test_getUrl_defaultValue(self):
@@ -57,74 +56,13 @@ class BenchmarkModuleTest(TestCase):
         self.module.setQPS(qps)
         self.assertEqual(self.module.getQPS(), qps)
 
-    # def test_setUrl_return(self):
-    #  self.assertIs(type(self.module), self.module.setUrl('http://localhost'))
-
-    #def test_setCount_return(self):
-    #  self.assertIs(type(self.module), self.module.setCount(1))
-
-    #def test_setMaxWorkers_return(self):
-    #  self.assertIs(type(self.module), self.module.setMaxWorkers(1))
-
-    #def test_setQPS_return(self):
-    #  self.assertIs(type(self.module), self.module.setQPS(1))
-
-    #def test_setMethod_return(self):
-    #  self.assertIs(type(self.module), self.module.setMethod('get'))
-
-    @skip('exception test skipping')
-    def test_ControllerException(self):
-        try:
-            controller = Controller()
-            if not controller:
-                raise Exception('get controller instance error.')
-        except Exception as e:
-            self.assertTrue(e)
-
-    @skip('app test skipping')
-    def test_app_getInstance(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-
-class ControllerTest(TestCase):
-    module = None
-    params = {}
-
-    def setUp(self):
-        self.params = {}
-        try:
-            injector.binder.bind(AppName, 'benchmark')
-            injector.binder.bind(AppParams, self.params)
-
-            ctrl = (fudge.Fake('Controller').is_callable().expects('setModule'))
-            ctrl.setModule(injector.get(AppModule))
-            self.module = ctrl.getModule()
-        except Exception as e:
-            self.assertFalse(e)
-
-    @skip('skip')
-    def test_isAppModule(self):
-        self.assertIs(type(self.module), AppModule)
-
-    @skip('skip')
-    def test_isBenchMarkApp(self):
-        benchmark = (fudge.Fake('Benchmark').is_callable().expects('__init__'))
-        self.assertIsInstance(benchmark, self.module.get())
-
-    @skip('skip')
-    def test_urlRequest(self):
-        self.module.get().urlRequest()
-
     def tearDown(self):
         pass
 
 
 def suite():
     ts = TestSuite()
-    tests = [BenchmarkModuleTest, ControllerTest]
+    tests = [BenchmarkModuleTest]
 
     ts.addTests(map(makeSuite, tests))
 
