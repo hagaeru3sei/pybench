@@ -8,75 +8,76 @@ from org.nmochizuki.module.Module import Module
 from org.nmochizuki.module.AppModule import AppModule
 from argparse import ArgumentParser
 
+
 class Controller(object):
-  """ """
-  module = None
-  params = dict()
-  logger = logging.getLogger(__name__)
-
-  def __init__(self):
     """ """
-    self.logger.info('Controller started.')
-    self.parseArguments()
+    module = None
+    params = dict()
+    logger = logging.getLogger(__name__)
 
-    try:
-      Validator.valid(self.getParams())
+    def __init__(self):
+        """ """
+        self.logger.info('Controller started.')
+        self.parseArguments()
 
-      injector.binder.bind(AppName, "benchmark")
-      injector.binder.bind(AppParams, self.getParams())
+        try:
+            Validator.valid(self.getParams())
 
-      self.setModule(injector.get(AppModule))
+            injector.binder.bind(AppName, "benchmark")
+            injector.binder.bind(AppParams, self.getParams())
 
-    except ValidatorError as e:
-      self.logger.error(e)
-      sys.exit(-1)
+            self.setModule(injector.get(AppModule))
 
-    except ImportError as e:
-      self.logger.error(e)
-      sys.exit(-1)
+        except ValidatorError as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
-    except NameError as e:
-      self.logger.error(e)
-      sys.exit(-1)
+        except ImportError as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
-  def parseArguments(self):
-    """ """
-    try:
-      parser = injector.get(IArgumentParser)
-    except Exception as e:
-      self.logger.error(e)
-      sys.exit(-1)
+        except NameError as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
-    parser.add_argument('-u', '--url', required=True, type=str)
-    parser.add_argument('-n', '--count', required=True, type=int)
-    parser.add_argument('-c', '--worker', required=True, type=int)
-    parser.add_argument('-q', '--qps', type=int)
-    parser.add_argument('-m', '--method', type=int)
-    args = parser.parse_args()
+    def parseArguments(self):
+        """ """
+        try:
+            parser = injector.get(IArgumentParser)
+        except Exception as e:
+            self.logger.error(e)
+            sys.exit(-1)
 
-    self.params['url']    = args.url
-    self.params['count']  = args.count
-    self.params['worker'] = args.worker
-    self.params['qps']    = args.qps
-    self.params['method'] = args.method
+        parser.add_argument('-u', '--url', required=True, type=str)
+        parser.add_argument('-n', '--count', required=True, type=int)
+        parser.add_argument('-c', '--worker', required=True, type=int)
+        parser.add_argument('-q', '--qps', type=int)
+        parser.add_argument('-m', '--method', type=int)
+        args = parser.parse_args()
 
-  def setParams(self, params):
-    self.params = params
-    return self
+        self.params['url'] = args.url
+        self.params['count'] = args.count
+        self.params['worker'] = args.worker
+        self.params['qps'] = args.qps
+        self.params['method'] = args.method
 
-  def setModule(self, module):
-    self.module = module
-    return self
+    def setParams(self, params):
+        self.params = params
+        return self
 
-  def getParams(self):
-    return self.params
+    def setModule(self, module):
+        self.module = module
+        return self
 
-  def getModule(self):
-    return self.module
+    def getParams(self):
+        return self.params
 
-  def execute(self):
-    self.getModule().get().execute()
+    def getModule(self):
+        return self.module
 
-  def __del__(self):
-    self.logger.info('Controller finished.')
+    def execute(self):
+        self.getModule().get().execute()
+
+    def __del__(self):
+        self.logger.info('Controller finished.')
 

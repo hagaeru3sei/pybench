@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 class Module(object):
-  """ """
-  def __init__(self, name, params):
     """ """
-    pass
+    name = ""
+    params = dict()
+
+    def __init__(self, name, params):
+        """ """
+        self.name = name
+        self.params = params
