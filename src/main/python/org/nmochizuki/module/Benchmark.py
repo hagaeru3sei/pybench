@@ -8,7 +8,6 @@ from urllib.request import urlopen
 from urllib.request import Request
 from urllib.error import URLError
 from org.nmochizuki.AppContext import AppContext
-# from org.nmochizuki.decorators import synchronized
 
 
 class Benchmark(AppContext):
@@ -65,7 +64,6 @@ class Benchmark(AppContext):
         self.request.method = self.method
         self.request.add_header('Accept-Encoding', 'gzip, deflate')
         self.request.add_header('Connection', 'keep-alive')
-        self.request.add_header('Cookie', 'TR=1;')
         self.request.add_header('User-Agent', 'Mozilla/5.0')
 
     def rebindRequest(self, useragent):

@@ -58,5 +58,5 @@ class AppModule(Module):
         self.params = params
         return self
 
-    def get(self):
+    def get(self) -> AppContext:
         return self.app(self.getModule(), self.getParams())

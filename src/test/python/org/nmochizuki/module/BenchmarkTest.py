@@ -1,17 +1,20 @@
 # -*- coding:utf-8 -*-
 import sys
-
 sys.path.append("./src/main/python")
-import fudge
+
 from unittest import TestCase
 from unittest import TestSuite
 from unittest import makeSuite
-from unittest import skip
-from org.nmochizuki.variables import *
-from org.nmochizuki.Controller import Controller
-from org.nmochizuki.decorators import synchronized
-from org.nmochizuki.module.Benchmark import Benchmark
 from org.nmochizuki.module.Benchmark import BenchmarkModule
+
+
+class BenchMarkTest(TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
 
 class BenchmarkModuleTest(TestCase):
