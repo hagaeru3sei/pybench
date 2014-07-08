@@ -51,15 +51,15 @@ class Controller(object):
         parser.add_argument('-u', '--url', required=True, type=str)
         parser.add_argument('-n', '--count', required=True, type=int)
         parser.add_argument('-c', '--worker', required=True, type=int)
-        parser.add_argument('-q', '--qps', type=int)
         parser.add_argument('-m', '--method', type=str)
+        parser.add_argument('-q', '--qps', type=int)
         args = parser.parse_args()
 
         self.params['url'] = args.url
         self.params['count'] = args.count
         self.params['worker'] = args.worker
         self.params['qps'] = args.qps
-        self.params['method'] = "GET"  # TODO:
+        self.params['method'] = args.method
 
     def setParams(self, params):
         self.params = params

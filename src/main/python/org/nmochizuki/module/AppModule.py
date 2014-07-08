@@ -30,16 +30,16 @@ class AppModule(Module):
             self.logger.error(e)
             sys.exit(-1)
 
-    def getModule(self):
+    def getModule(self) -> Module:
         return self.module
 
-    def getApp(self):
+    def getApp(self) -> AppContext:
         return self.app
 
-    def getName(self):
+    def getName(self) -> str:
         return self.name
 
-    def getParams(self):
+    def getParams(self) -> dict:
         return self.params
 
     def setApp(self, app):

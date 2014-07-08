@@ -65,7 +65,7 @@ class BenchmarkModuleTest(TestCase):
 
 def suite():
     ts = TestSuite()
-    tests = [BenchmarkModuleTest]
+    tests = [BenchMarkTest, BenchmarkModuleTest]
 
     ts.addTests(map(makeSuite, tests))
 

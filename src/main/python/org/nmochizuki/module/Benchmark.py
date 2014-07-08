@@ -14,6 +14,7 @@ class Benchmark(AppContext):
     max_workers = 1
     count = 1
     url = ""
+    method = ""
     result = dict()
     timeout = 1.0
     qps = 10
@@ -24,7 +25,13 @@ class Benchmark(AppContext):
 
     def __init__(self, module, params):
         """ """
+
+        self.logger.info(params)
+
         AppContext.__init__(self)
+
+        if not params['method']:
+            params['method'] = BenchmarkModule.method
 
         module = module() \
             .setUrl(params['url']) \
@@ -96,6 +103,9 @@ class Benchmark(AppContext):
                 self.result['error'] += 1
                 self.result['total'] += 1
 
+            except Exception as e:
+                self.logger.error(e)
+
     @classmethod
     def urlRequest(cls, request, timeout, useragent="", url=""):
         """ return None """
@@ -116,6 +126,13 @@ class Benchmark(AppContext):
             raise RuntimeError(e)
 
         except HTTPError as e:
+            cls.logger.error(e)
+            cls.result['message'] = e
+            cls.result['error'] += 1
+            cls.result['total'] += 1
+            raise RuntimeError(e)
+
+        except Exception as e:
             cls.logger.error(e)
             cls.result['message'] = e
             cls.result['error'] += 1
@@ -152,14 +169,14 @@ class BenchmarkModule(object):
     count = 1
     max_workers = 1
     qps = 1
-    method = ""
+    method = "GET"
 
     def __init__(self):
         self.url = ""
         self.count = 1
         self.max_workers = 1
         self.qps = 1
-        self.method = "get"
+        self.method = "GET"
 
     def setUrl(self, url):
         self.url = url
