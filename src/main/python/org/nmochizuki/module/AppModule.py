@@ -17,8 +17,8 @@ class AppModule(Module):
     module = None
     logger = logging.getLogger(__name__)
 
-    @inject(name=AppName, params=AppParams)
-    def __init__(self, name, params):
+    @inject
+    def __init__(self, name: AppName, params: AppParams):
         """ Override Module.__init__ """
         super().__init__(name, params)
 
