@@ -18,7 +18,7 @@ $PROJECT_ROOT/src/main/python/main.py --help/-h
 ```
 
 And copy src/main/resources *.txt.sample to *.txt
-If need cookie for request please add values to cookies.txt
+If need cookie for request Please add values to cookies.txt
 ```
 name1=value1
 name2=value2
