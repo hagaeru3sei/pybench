@@ -14,16 +14,16 @@ def synchronized(function):
     return _synchronized
 
 
-def ttfb(func):
+def exec_time(func):
     """ 関数の実行時間を計測する.
 
     :param func:
     :return:
     """
-    def _ttfb(*args, **kw):
+    def _exec_time(*args, **kw):
         start = time.time()
         res = func(*args, **kw)
         r = time.time() - start
         print(r)
         return res
-    return _ttfb
+    return _exec_time

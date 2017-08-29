@@ -4,6 +4,7 @@ import sys
 import os
 import signal
 import logging
+from org.nmochizuki.decorators import exec_time
 from org.nmochizuki.Controller import Controller
 from org.nmochizuki.module.AppModule import AppModule
 from configparser import ConfigParser
@@ -21,7 +22,6 @@ def handler(signum, frame):
     os.kill(Pid, signal.SIGKILL)
     logger.info('killed pid: %d' % (Pid,))
     sys.exit(1)
-
 
 def main():
     global Pid

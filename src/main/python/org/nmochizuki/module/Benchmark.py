@@ -2,6 +2,7 @@
 import time
 import threading
 import logging
+import random
 from urllib.error import HTTPError
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
@@ -21,6 +22,7 @@ class Benchmark(AppContext):
     request = None
     urls = []
     useragents = []
+    cookies = []
     logger = logging.getLogger(__name__)
 
     def __init__(self, module, params):
@@ -46,13 +48,14 @@ class Benchmark(AppContext):
         self.method = module.getMethod()
         self.timeout = 1.0
 
-        self.loadUserAgents()
-        self.loadURLs()
+        self.load_useragents()
+        self.load_urls()
+        self.load_cookies()
 
-        self.initResult()
-        self.initRequest()
+        self.init_result()
+        self.init_request()
 
-    def initResult(self):
+    def init_result(self):
         """ """
         self.result['success'] = 0
         self.result['error'] = 0
@@ -65,28 +68,27 @@ class Benchmark(AppContext):
         self.result['start'] = time.time()
         self.result['end'] = 0.0
 
-    def initRequest(self):
+    def init_request(self):
         """ """
         self.request = Request(self.url)
         self.request.method = self.method
         self.request.add_header('Accept-Encoding', 'gzip, deflate')
         self.request.add_header('Connection', 'keep-alive')
-        self.request.add_header('User-Agent', 'Mozilla/5.0')
+        self.request.add_header('Cookie', '; '.join(self.cookies))
 
-    def rebindRequest(self, useragent):
-        """ return Request request """
-        #request.full_url = random.sample(urls, 1)
-        self.request.add_header('User-Agent', useragent)
-        return self.request
-
-    def loadUserAgents(self):
-        """ """
-        with open('src/main/resources/useragent.txt') as fh:
+    def load_useragents(self):
+        """" """
+        with open('src/main/resources/useragents.txt') as fh:
             self.useragents = [ua.rstrip() for ua in fh]
 
-    def loadURLs(self):
+    def load_cookies(self):
         """ """
-        with open('src/main/resources/request.txt') as fh:
+        with open('src/main/resources/cookies.txt') as fh:
+            self.cookies = [cookie.rstrip() for cookie in fh]
+
+    def load_urls(self):
+        """ """
+        with open('src/main/resources/urls.txt') as fh:
             self.urls = [url.rstrip() for url in fh]
 
     def execute(self):
@@ -94,7 +96,7 @@ class Benchmark(AppContext):
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             try:
                 for i in range(self.count):
-                    #self.rebindRequest(random.sample(self.useragents, 1))
+                    self.request.add_header('User-Agent', str(random.sample(self.useragents, 1)[0]))
                     executor.submit(self.urlRequest, self.request, self.timeout)
 
             except RuntimeError as e:
@@ -107,7 +109,7 @@ class Benchmark(AppContext):
                 self.logger.error(e)
 
     @classmethod
-    def urlRequest(cls, request, timeout, useragent="", url=""):
+    def urlRequest(cls, request, timeout):
         """ return None """
         start = time.time()
 
