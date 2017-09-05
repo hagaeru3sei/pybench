@@ -5,18 +5,16 @@ from threading import RLock
 lock = RLock()
 
 
-def synchronized(function):
+def synchronized(func):
     def _synchronized(*args, **kw):
         lock.acquire()
-        with function(*args, **kw) as func:
-            return func
-
+        with func(*args, **kw) as f:
+            return f
     return _synchronized
 
 
 def exec_time(func):
     """ 関数の実行時間を計測する.
-
     :param func:
     :return:
     """

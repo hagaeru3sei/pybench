@@ -11,6 +11,7 @@ from org.nmochizuki.AppContext import AppContext
 
 
 class AppModule(Module):
+
     name = ""
     params = dict()
     app = None
@@ -23,40 +24,40 @@ class AppModule(Module):
         super().__init__(name, params)
 
         try:
-            self.setApp(eval(name[0].upper() + name[1:]))
-            self.setModule(eval(name[0].upper() + name[1:] + "Module"))
+            self.set_app(eval(name[0].upper() + name[1:]))
+            self.set_module(eval(name[0].upper() + name[1:] + "Module"))
 
         except NameError as e:
             self.logger.error(e)
             sys.exit(-1)
 
-    def getModule(self) -> Module:
+    def get_module(self) -> Module:
         return self.module
 
-    def getApp(self) -> AppContext:
+    def get_app(self) -> AppContext:
         return self.app
 
-    def getName(self) -> str:
+    def get_name(self) -> str:
         return self.name
 
-    def getParams(self) -> dict:
+    def get_params(self) -> dict:
         return self.params
 
-    def setApp(self, app):
+    def set_app(self, app):
         self.app = app
         return self
 
-    def setModule(self, module):
+    def set_module(self, module):
         self.module = module
         return self
 
-    def setName(self, name):
+    def set_name(self, name):
         self.name = name
         return self
 
-    def setParams(self, params):
+    def set_params(self, params):
         self.params = params
         return self
 
     def get(self) -> AppContext:
-        return self.app(self.getModule(), self.getParams())
+        return self.app(self.get_module(), self.get_params())

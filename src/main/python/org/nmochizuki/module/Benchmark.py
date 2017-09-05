@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
-import time
 import threading
 import logging
 import random
-from urllib.error import HTTPError
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
 from urllib.request import Request
 from urllib.error import URLError
 from org.nmochizuki.AppContext import AppContext
+from org.nmochizuki.decorators import *
 
 
 class Benchmark(AppContext):
+
     max_workers = 1
     count = 1
     url = ""
     method = ""
     result = dict()
-    timeout = 1.0
+    timeout = 60
     qps = 10
     request = None
     urls = []
@@ -36,16 +36,16 @@ class Benchmark(AppContext):
             params['method'] = BenchmarkModule.method
 
         module = module() \
-            .setUrl(params['url']) \
-            .setCount(params['count']) \
-            .setMaxWorkers(params['worker']) \
-            .setQPS(params['qps']) \
-            .setMethod(params['method'])
+            .set_url(params['url']) \
+            .set_count(params['count']) \
+            .set_max_workers(params['worker']) \
+            .set_qps(params['qps']) \
+            .set_method(params['method'])
 
-        self.max_workers = module.getMaxWorkers()
-        self.url = module.getUrl()
-        self.count = module.getCount()
-        self.method = module.getMethod()
+        self.max_workers = module.get_max_workers()
+        self.url = module.get_url()
+        self.count = module.get_count()
+        self.method = module.get_method()
         self.timeout = 1.0
 
         self.load_useragents()
@@ -93,23 +93,13 @@ class Benchmark(AppContext):
 
     def execute(self):
         """ """
-        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            try:
-                for i in range(self.count):
-                    self.request.add_header('User-Agent', str(random.sample(self.useragents, 1)[0]))
-                    executor.submit(self.urlRequest, self.request, self.timeout)
-
-            except RuntimeError as e:
-                self.logger.error(e)
-                self.result['message'] = e
-                self.result['error'] += 1
-                self.result['total'] += 1
-
-            except Exception as e:
-                self.logger.error(e)
+        with ThreadPoolExecutor(self.max_workers) as executor:
+            for i in range(self.count):
+                self.request.add_header('User-Agent', str(random.sample(self.useragents, 1)[0]))
+                executor.submit(self.url_request, self.request, self.timeout)
 
     @classmethod
-    def urlRequest(cls, request, timeout):
+    def url_request(cls, request, timeout):
         """ return None """
         start = time.time()
 
@@ -119,21 +109,6 @@ class Benchmark(AppContext):
             with urlopen(request, timeout=timeout) as rs:
                 if rs.status != 200:
                     raise URLError("status:%d" % (rs.status,))
-
-        except URLError as e:
-            cls.logger.error(e)
-            cls.result['message'] = e
-            cls.result['error'] += 1
-            cls.result['total'] += 1
-            raise RuntimeError(e)
-
-        except HTTPError as e:
-            cls.logger.error(e)
-            cls.result['message'] = e
-            cls.result['error'] += 1
-            cls.result['total'] += 1
-            raise RuntimeError(e)
-
         except Exception as e:
             cls.logger.error(e)
             cls.result['message'] = e
@@ -180,37 +155,37 @@ class BenchmarkModule(object):
         self.qps = 1
         self.method = "GET"
 
-    def setUrl(self, url):
+    def set_url(self, url):
         self.url = url
         return self
 
-    def setCount(self, count):
+    def set_count(self, count):
         self.count = count
         return self
 
-    def setMaxWorkers(self, max_workers):
+    def set_max_workers(self, max_workers):
         self.max_workers = max_workers
         return self
 
-    def setQPS(self, qps):
+    def set_qps(self, qps):
         self.qps = qps
         return self
 
-    def setMethod(self, method):
+    def set_method(self, method):
         self.method = method
         return self
 
-    def getUrl(self):
+    def get_url(self):
         return self.url
 
-    def getCount(self):
+    def get_count(self):
         return self.count
 
-    def getMaxWorkers(self):
+    def get_max_workers(self):
         return self.max_workers
 
     def getQPS(self):
         return self.qps
 
-    def getMethod(self):
+    def get_method(self):
         return self.method

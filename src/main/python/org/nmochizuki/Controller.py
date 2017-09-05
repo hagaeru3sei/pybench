@@ -4,9 +4,7 @@ import logging
 from org.nmochizuki.variables import *
 from org.nmochizuki.validator import Validator
 from org.nmochizuki.ExtExceptions import ValidatorError
-from org.nmochizuki.module.Module import Module
 from org.nmochizuki.module.AppModule import AppModule
-from argparse import ArgumentParser
 
 
 class Controller(object):
