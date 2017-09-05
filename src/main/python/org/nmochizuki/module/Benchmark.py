@@ -18,11 +18,15 @@ class Benchmark(AppContext):
     method = ""
     result = dict()
     timeout = 60
-    qps = 10
+    qps = 0
+    second = 0
     request = None
     urls = []
     useragents = []
     cookies = []
+    current_qps = 0
+    qps_timer = 0.0
+    start_time = 0
     logger = logging.getLogger(__name__)
 
     def __init__(self, module, params):
@@ -40,11 +44,14 @@ class Benchmark(AppContext):
             .set_count(params['count']) \
             .set_max_workers(params['worker']) \
             .set_qps(params['qps']) \
+            .set_second(params['second']) \
             .set_method(params['method'])
 
         self.max_workers = module.get_max_workers()
         self.url = module.get_url()
         self.count = module.get_count()
+        self.qps = module.get_qps()
+        self.second = module.get_second()
         self.method = module.get_method()
         self.timeout = 1.0
 
@@ -54,6 +61,8 @@ class Benchmark(AppContext):
 
         self.init_result()
         self.init_request()
+
+        print(self.qps, self.second)
 
     def init_result(self):
         """ """
@@ -91,12 +100,45 @@ class Benchmark(AppContext):
         with open('src/main/resources/urls.txt') as fh:
             self.urls = [url.rstrip() for url in fh]
 
+    def is_use_qps(self):
+        if self.qps > 0 and self.second > 0:
+            return True
+        else:
+            return False
+
+    def calulate_interval(self):
+        """
+        """
+        t = time.time() - self.qps_timer
+        print("t: ", t)
+        if self.current_qps >= self.qps:
+            if t < 1.0:
+                return 1.0 - t
+        if t >= 1.0:
+            self.qps_timer = time.time()
+            self.reset_current_qps()
+        return 0
+
+    def incr_current_qps(self):
+        self.current_qps += 1
+
+    def reset_current_qps(self):
+        self.current_qps = 0
+
+    def adjust_qps(self):
+        self.incr_current_qps()
+        time.sleep(self.calulate_interval())
+        return None
+
     def execute(self):
         """ """
+        self.qps_timer = time.time()
         with ThreadPoolExecutor(self.max_workers) as executor:
             for i in range(self.count):
                 self.request.add_header('User-Agent', str(random.sample(self.useragents, 1)[0]))
                 executor.submit(self.url_request, self.request, self.timeout)
+                if self.is_use_qps():
+                    self.adjust_qps()
 
     @classmethod
     def url_request(cls, request, timeout):
@@ -145,14 +187,16 @@ class BenchmarkModule(object):
     url = ""
     count = 1
     max_workers = 1
-    qps = 1
+    qps = 0
+    second = 0
     method = "GET"
 
     def __init__(self):
         self.url = ""
         self.count = 1
         self.max_workers = 1
-        self.qps = 1
+        self.qps = 0
+        self.second = 0
         self.method = "GET"
 
     def set_url(self, url):
@@ -171,6 +215,10 @@ class BenchmarkModule(object):
         self.qps = qps
         return self
 
+    def set_second(self, second):
+        self.second = second
+        return self
+
     def set_method(self, method):
         self.method = method
         return self
@@ -184,8 +232,11 @@ class BenchmarkModule(object):
     def get_max_workers(self):
         return self.max_workers
 
-    def getQPS(self):
+    def get_qps(self):
         return self.qps
+
+    def get_second(self):
+        return self.second
 
     def get_method(self):
         return self.method
