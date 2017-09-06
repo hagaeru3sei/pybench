@@ -22,6 +22,6 @@ def exec_time(func):
         start = time.time()
         res = func(*args, **kw)
         r = time.time() - start
-        print(r)
+        print(func, "exec time: %f sec" % (r,))
         return res
     return _exec_time

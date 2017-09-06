@@ -45,7 +45,6 @@ def main():
 
     if Pid == -1:
         raise Exception("Failed to fork.")
-
     elif Pid == 0:
         controller = Controller()
         controller.execute()

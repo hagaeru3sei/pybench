@@ -2,7 +2,8 @@
 import threading
 import logging
 import random
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from pprint import pprint
 from urllib.request import urlopen
 from urllib.request import Request
 from urllib.error import URLError
@@ -62,8 +63,6 @@ class Benchmark(AppContext):
         self.init_result()
         self.init_request()
 
-        print(self.qps, self.second)
-
     def init_result(self):
         """ """
         self.result['success'] = 0
@@ -76,6 +75,7 @@ class Benchmark(AppContext):
         self.result['total'] = 0
         self.result['start'] = time.time()
         self.result['end'] = 0.0
+        self.result['qps'] = 0
 
     def init_request(self):
         """ """
@@ -100,49 +100,66 @@ class Benchmark(AppContext):
         with open('src/main/resources/urls.txt') as fh:
             self.urls = [url.rstrip() for url in fh]
 
-    def is_use_qps(self):
+    def is_use_qps(self) -> bool:
+        """ If Using QPS (Query Par Second) mode.
+        :return: bool
+        """
         if self.qps > 0 and self.second > 0:
             return True
         else:
             return False
 
-    def calulate_interval(self):
+    def calculate_interval(self) -> float:
         """
+        :return: float
         """
         t = time.time() - self.qps_timer
-        print("t: ", t)
-        if self.current_qps >= self.qps:
+        if self.current_qps > self.qps:
             if t < 1.0:
                 return 1.0 - t
         if t >= 1.0:
             self.qps_timer = time.time()
             self.reset_current_qps()
-        return 0
+        return 0.0
 
-    def incr_current_qps(self):
+    def incr_current_qps(self) -> None:
         self.current_qps += 1
 
-    def reset_current_qps(self):
+    def reset_current_qps(self) -> None:
         self.current_qps = 0
 
-    def adjust_qps(self):
+    def adjust_qps(self) -> None:
         self.incr_current_qps()
-        time.sleep(self.calulate_interval())
-        return None
+        time.sleep(self.calculate_interval())
 
-    def execute(self):
-        """ """
+    def execute(self) -> None:
+        """
+        :return: None
+        """
         self.qps_timer = time.time()
+        futures = []
         with ThreadPoolExecutor(self.max_workers) as executor:
             for i in range(self.count):
                 self.request.add_header('User-Agent', str(random.sample(self.useragents, 1)[0]))
-                executor.submit(self.url_request, self.request, self.timeout)
+                f = executor.submit(self.url_request, self.request, self.timeout)
+                futures.append(f)
                 if self.is_use_qps():
+                    self.result['qps'] = self.current_qps
                     self.adjust_qps()
 
+        for result in as_completed(futures):
+            if result:
+                self.logger.debug(result)
+
+        pprint(self.result)
+
     @classmethod
-    def url_request(cls, request, timeout):
-        """ return None """
+    def url_request(cls, request, timeout) -> None:
+        """
+        :arg: request Request
+        :arg: timeout int
+        :return: None
+        """
         start = time.time()
 
         cls.logger.debug("thread:%s started." % (threading.current_thread(),))
