@@ -33,3 +33,11 @@ cd $PROJECT_ROOT
 src/main/python/main.py -u http://localhost -n 10 -c 2
 ```
 
+##### QPS mode
+
+QPS is Query Per Seconds.
+If you want to use the QPS mode, Please add the -q and -s options.
+
+```
+src/main/python/main.py -u http://localhost -n 600 -c 2 -q 10 -s 1
+```
